@@ -19,5 +19,5 @@ it('can enforce a feature to be enabled', function () {
     Feature::welcome_email->enforce();
 
     expect(fn () => Feature::other_feature->enforce())
-        ->toThrow(FeatureException::notEnabled(Feature::other_feature));
+        ->toThrow(FeatureException::class, 'Feature [other_feature] is not enabled');
 });

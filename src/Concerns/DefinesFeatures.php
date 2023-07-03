@@ -22,7 +22,6 @@ trait DefinesFeatures
 
     public function enforce(): void
     {
-        /** @noinspection PhpParamsInspection */
         throw_if(! $this->enabled(), FeatureException::notEnabled($this));
     }
 

@@ -80,6 +80,22 @@ AppFeature::impersonate->enforce(); //throws "Feature [impersonate] is not enabl
 
 ```
 
+### Blade directives
+
+In blade files, a feature can be checked with `@feature` directive:
+
+```html
+
+@feature(AppFeature::multi_language)
+<select name="language" xmlns="http://www.w3.org/1999/html">
+    <option value="en">English</option>
+    <option value="fr">French</option>
+    <option value="it">Italian</option>
+</select>
+@endfeature
+
+```
+
 ### Customizing where and how to store enabled features
 
 Enabled features are usually stored in config('app.features'), but this behaviour can be customized by

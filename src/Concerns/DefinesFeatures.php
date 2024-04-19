@@ -63,10 +63,14 @@ trait DefinesFeatures
         $camelFeatureName = str($this->featureName())->camel()->ucfirst();
 
         $try_methods = [
+            "resolve_$featureName",
+            "resolve_{$featureName}_feature",
             "check_$featureName",
             "check_{$featureName}_feature",
             "has_$featureName",
             "has_{$featureName}Feature",
+            "resolve$camelFeatureName",
+            "resolve{$camelFeatureName}Feature",
             "check$camelFeatureName",
             "check{$camelFeatureName}Feature",
             "has$camelFeatureName",

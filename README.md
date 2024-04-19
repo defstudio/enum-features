@@ -37,29 +37,35 @@ enum AppFeature
     case multi_language;
     case impersonate;
     case welcome_email;
+    
+    /* Feature resolution */
+    
+    //with a single method:
+    protected function resolve(?Authenticatable $user = null) {
+        $user ??= auth()->user();
+        
+        match($this){
+            case self::multi_language => true,
+            case self::impersonate => $user->isAdmin(),
+            default => false;
+        }
+    }
+    
+    //or with a dedicated method:
+    
+    protected function resolveImpersonate(?Authenticatable $user = null){
+        $user ??= auth()->user();
+        
+        return $user->isSuperAdmin();
+    }
 }
 ```
 
-and each feature can then added to the Laravel application in its `configs/app.php` file:
-
-```php
-// config/app.php
-
-return [
-    //..
-    
-    'features' => [
-        AppFeature::multi_language,
-        AppFeature::welcome_email,
-    ]
-]
-
-```
 
 then, in code, a feature could be checked to be enabled:
 
 ```php
-if(AppFeature::multi_language->enabled()){
+if(AppFeature::multi_language->active()){
     //.. multi language specific code
 }
 ```
@@ -67,7 +73,7 @@ if(AppFeature::multi_language->enabled()){
 or be disabled
 
 ```php
-if(AppFeature::impersonate->disabled()){
+if(AppFeature::impersonate->inactive()){
     throw(new Exception("Impersonate feature is not enabled"));
 }
 ```
@@ -95,32 +101,6 @@ In blade files, a feature can be checked with `@feature` directive:
 @endfeature
 
 ```
-
-### Customizing where and how to store enabled features
-
-Enabled features are usually stored in config('app.features'), but this behaviour can be customized by
-overriding the `enabledFeatures()` static method inside the enum class:
-
-
-```php
-use DefStudio\EnumFeatures\EnumFeatures;
-
-enum AppFeature
-{
-    use DefinesFeatures; // ← simply add this 
-
-    case multi_language;
-    case impersonate;
-    case welcome_email;
-    
-    public static function enabledFeatures(): array
-    {
-        return config('my_package.features', []);  //or load from DB, or every other method
-    }
-}
-
-```
-**note:** changing how enabled features are checked makes this package framework agnostic and it can be used in any php applicaiton
 
 ## Testing
 

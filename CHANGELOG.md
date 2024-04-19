@@ -2,6 +2,10 @@
 
 All notable changes to `enum-features` will be documented in this file.
 
+## v2.0.3 - 2024-04-19
+
+**Full Changelog**: https://github.com/defstudio/enum-features/compare/v2.0.2...v2.0.3
+
 ## v2.0.2 - 2024-04-19
 
 **Full Changelog**: https://github.com/defstudio/enum-features/compare/v2.0.1...v2.0.2

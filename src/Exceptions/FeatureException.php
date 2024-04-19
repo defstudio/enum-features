@@ -8,14 +8,7 @@ use UnitEnum;
 
 class FeatureException extends Exception
 {
-    public static function notEnabled(UnitEnum $feature): FeatureException
-    {
-        $name = $feature instanceof BackedEnum ? $feature->value : $feature->name;
-
-        return new self("Feature [$name] is not enabled");
-    }
-
-    public static function invalid_feature_enum(UnitEnum $feature): FeatureException
+    public static function invalid_feature(UnitEnum $feature): FeatureException
     {
         $name = $feature instanceof BackedEnum ? $feature->value : $feature->name;
 

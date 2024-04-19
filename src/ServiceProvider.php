@@ -20,7 +20,7 @@ class ServiceProvider extends PackageServiceProvider
     {
         Blade::if('feature', function (UnitEnum $feature) {
             if (! class_uses($feature, DefinesFeatures::class)) {
-                throw FeatureException::invalid_feature_enum($feature);
+                throw FeatureException::invalid_feature($feature);
             }
 
             /** @var DefinesFeatures $feature */

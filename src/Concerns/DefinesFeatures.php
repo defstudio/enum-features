@@ -57,7 +57,7 @@ trait DefinesFeatures
         Pennant::purge($this->featureName());
     }
 
-    protected function resolve(Authenticatable $scope = null): bool
+    protected function resolve(?Authenticatable $scope = null): bool
     {
         $featureName = $this->featureName();
         $camelFeatureName = str($this->featureName())->camel()->ucfirst();

@@ -57,6 +57,19 @@ enum AppFeature
 }
 ```
 
+and should be registered in your Provider
+
+```php
+class AppServiceProvider extends ServiceProvider
+{
+    //..
+    
+    public function boot(): void {
+        AppFeature::defineFeatures();
+    }
+}
+```
+
 
 then, in code, a feature could be checked to be enabled:
 

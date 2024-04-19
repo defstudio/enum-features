@@ -136,6 +136,11 @@ trait DefinesFeatures
         Pennant::forget($this->featureName());
     }
 
+    public static function defineFeatures(): void
+    {
+        collect(self::cases())->each->define();
+    }
+
     /**
      * @param  array<self>  $features
      */

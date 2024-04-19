@@ -41,9 +41,7 @@ enum AppFeature
     /* Feature resolution */
     
     //with a single method:
-    protected function resolve(?Authenticatable $user = null) {
-        $user ??= auth()->user();
-        
+    protected function resolve(Authenticatable $user = null) {
         match($this){
             case self::multi_language => true,
             case self::impersonate => $user->isAdmin(),
@@ -53,9 +51,7 @@ enum AppFeature
     
     //or with a dedicated method:
     
-    protected function resolveImpersonate(?Authenticatable $user = null){
-        $user ??= auth()->user();
-        
+    protected function resolveImpersonate(Authenticatable $user = null){
         return $user->isSuperAdmin();
     }
 }

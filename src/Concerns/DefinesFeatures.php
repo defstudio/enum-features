@@ -133,7 +133,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function areAllActive(array $features): bool
     {
@@ -143,7 +143,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function someAreActive(array $features): bool
     {
@@ -153,7 +153,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function areAllEnabled(array $features): bool
     {
@@ -161,7 +161,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function someAreEnabled(array $features): bool
     {
@@ -169,7 +169,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function areAllInactive(array $features): bool
     {
@@ -179,7 +179,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function someAreInactive(array $features): bool
     {
@@ -189,7 +189,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function areAllDisabled(array $features): bool
     {
@@ -197,7 +197,7 @@ trait DefinesFeatures
     }
 
     /**
-     * @param  array<DefinesFeatures>  $features
+     * @param  array<self>  $features
      */
     public static function someAreDisabled(array $features): bool
     {

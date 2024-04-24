@@ -18,6 +18,4 @@ class TestCase extends Orchestra
     {
         config()->set('pennant.default', 'array');
     }
-
-
 }

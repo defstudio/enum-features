@@ -10,7 +10,7 @@
 A simple trait to enable a feature system using Enums:
 
 ```php
-if(AppFeature::welcome_email->enabled()){
+if(AppFeature::welcome_email->active()){
     Mail::to($newUser)->send(new WelcomeEmail($newUser));
 }
 ```
@@ -87,7 +87,7 @@ if(AppFeature::impersonate->inactive()){
 }
 ```
 
-or enforced
+or enforce it
 
 ```php
 

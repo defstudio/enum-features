@@ -1,7 +1,7 @@
 <?php
 
 use DefStudio\EnumFeatures\Tests\Fixtures\Feature;
-use Workbench\App\Models\User;
+use Illuminate\Foundation\Auth\User;
 
 test('defines_feature', function () {
     $enabled = new User([

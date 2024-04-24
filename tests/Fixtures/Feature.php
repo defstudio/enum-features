@@ -15,6 +15,7 @@ enum Feature
 
     protected function resolve(?Authenticatable $scope = null): bool
     {
+        dump($scope);
         return $scope->name === 'enabled_user';
     }
 }

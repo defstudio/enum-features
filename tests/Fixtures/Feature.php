@@ -15,7 +15,7 @@ enum Feature
 
     protected function resolve(?Authenticatable $scope = null): bool
     {
-        return match ($this){
+        return match ($this) {
             self::enabled_for_all => true,
             self::enabled_for_none => false,
             default => $scope->enabled,

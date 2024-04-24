@@ -13,4 +13,11 @@ class TestCase extends Orchestra
             PennantServiceProvider::class,
         ];
     }
+
+    protected function getEnvironmentSetUp($app): void
+    {
+        config()->set('pennant.default', 'array');
+    }
+
+
 }

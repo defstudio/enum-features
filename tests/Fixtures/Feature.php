@@ -9,13 +9,16 @@ enum Feature
 {
     use DefinesFeatures;
 
-    case feature_1;
-    case feature_2;
-    case feature_3;
+    case enabled_for_some;
+    case enabled_for_none;
+    case enabled_for_all;
 
     protected function resolve(?Authenticatable $scope = null): bool
     {
-        dd($scope);
-        return $scope->name === 'enabled_user';
+        return match ($this){
+            self::enabled_for_all => true,
+            self::enabled_for_none => false,
+            default => $scope->enabled,
+        };
     }
 }

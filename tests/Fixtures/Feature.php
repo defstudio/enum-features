@@ -18,7 +18,7 @@ enum Feature
         return match ($this){
             self::enabled_for_all => true,
             self::enabled_for_none => false,
-            default => $scope->enabled,
+            default => $scope?->enabled ?? false,
         };
     }
 }

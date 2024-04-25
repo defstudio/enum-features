@@ -32,19 +32,9 @@ trait DefinesFeatures
         return Pennant::active($this->featureName());
     }
 
-    public function enabled(?Authenticatable $scope = null): bool
-    {
-        return $this->active($scope);
-    }
-
     public function inactive(?Authenticatable $scope = null): bool
     {
         return ! $this->active($scope);
-    }
-
-    public function disabled(?Authenticatable $scope = null): bool
-    {
-        return $this->inactive($scope);
     }
 
     public function middleware(): string
@@ -104,11 +94,6 @@ trait DefinesFeatures
         Pennant::activate($this->featureName());
     }
 
-    public function enable(?Authenticatable $scope = null): void
-    {
-        $this->activate($scope);
-    }
-
     public function deactivate(?Authenticatable $scope = null): void
     {
         if ($scope) {
@@ -118,11 +103,6 @@ trait DefinesFeatures
         }
 
         Pennant::deactivate($this->featureName());
-    }
-
-    public function disable(?Authenticatable $scope = null): void
-    {
-        $this->deactivate($scope);
     }
 
     public function forget(?Authenticatable $scope = null): void
@@ -146,7 +126,7 @@ trait DefinesFeatures
      */
     public static function areAllActive(array $features): bool
     {
-        return Pennant::allAreInactive(collect($features)
+        return Pennant::allAreActive(collect($features)
             ->map(fn (self $feature) => $feature->featureName())
             ->toArray());
     }
@@ -159,22 +139,6 @@ trait DefinesFeatures
         return Pennant::someAreActive(collect($features)
             ->map(fn (self $feature) => $feature->featureName())
             ->toArray());
-    }
-
-    /**
-     * @param  array<self>  $features
-     */
-    public static function areAllEnabled(array $features): bool
-    {
-        return self::areAllActive($features);
-    }
-
-    /**
-     * @param  array<self>  $features
-     */
-    public static function someAreEnabled(array $features): bool
-    {
-        return self::someAreActive($features);
     }
 
     /**
@@ -195,21 +159,5 @@ trait DefinesFeatures
         return Pennant::someAreInactive(collect($features)
             ->map(fn (self $feature) => $feature->featureName())
             ->toArray());
-    }
-
-    /**
-     * @param  array<self>  $features
-     */
-    public static function areAllDisabled(array $features): bool
-    {
-        return self::areAllInactive($features);
-    }
-
-    /**
-     * @param  array<self>  $features
-     */
-    public static function someAreDisabled(array $features): bool
-    {
-        return self::someAreInactive($features);
     }
 }

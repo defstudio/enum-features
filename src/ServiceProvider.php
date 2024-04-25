@@ -23,8 +23,8 @@ class ServiceProvider extends PackageServiceProvider
                 throw FeatureException::invalid_feature($feature);
             }
 
-            /** @var DefinesFeatures $feature */
-            return $feature->enabled();
+            /** @phpstan-ignore-next-line  */
+            return $feature->active();
         });
     }
 }

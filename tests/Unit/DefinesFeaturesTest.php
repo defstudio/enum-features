@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 
-beforeEach(function () {
+beforeEach(function(){
     Model::unguard();
     Feature::defineFeatures();
 
@@ -15,6 +15,7 @@ beforeEach(function () {
 });
 
 it('can check if a feature is enabled', function () {
+
 
     Auth::setUser($this->enabled_user);
     expect(Feature::enabled_for_some->active())->toBeTrue();
@@ -41,13 +42,13 @@ it('can check if a feature is disabled for a given user', function () {
     expect(Feature::enabled_for_some->inactive($this->disabled_user))->toBeTrue();
 });
 
-it('can define a middleware', function () {
-    expect(Feature::enabled_for_some->middleware())->toBe("Laravel\Pennant\Middleware\EnsureFeaturesAreActive:enabled_for_some");
+it('can define a middleware', function(){
+   expect(Feature::enabled_for_some->middleware())->toBe("Laravel\Pennant\Middleware\EnsureFeaturesAreActive:enabled_for_some") ;
 });
 
 it('can purge recorded feature values', function () {
 
-    $stored_features = fn () => invade(invade(invade(\Laravel\Pennant\Feature::for($this->enabled_user))->driver)->driver)->resolvedFeatureStates;
+    $stored_features = fn() => invade(invade(invade(\Laravel\Pennant\Feature::for($this->enabled_user))->driver)->driver)->resolvedFeatureStates;
 
     expect($stored_features())->toBeEmpty();
 
@@ -56,6 +57,7 @@ it('can purge recorded feature values', function () {
 
     Feature::enabled_for_some->active($this->disabled_user);
     Feature::enabled_for_all->active($this->disabled_user);
+
 
     expect($stored_features())->toBe([
         'enabled_for_some' => [
@@ -80,7 +82,7 @@ it('can purge recorded feature values', function () {
 
 it('can forget recorded feature values', function () {
 
-    $stored_features = fn () => invade(invade(invade(\Laravel\Pennant\Feature::for($this->enabled_user))->driver)->driver)->resolvedFeatureStates;
+    $stored_features = fn() => invade(invade(invade(\Laravel\Pennant\Feature::for($this->enabled_user))->driver)->driver)->resolvedFeatureStates;
 
     expect($stored_features())->toBeEmpty();
 
@@ -114,65 +116,65 @@ it('can forget recorded feature values', function () {
     ]);
 });
 
-it('can enforce a feature', function () {
+it('can enforce a feature', function(){
     Auth::setUser($this->enabled_user);
 
-    expect(fn () => Feature::enabled_for_some->enforce())->not->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+    expect(fn() => Feature::enabled_for_some->enforce())->not->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
 
     Auth::setUser($this->disabled_user);
 
-    expect(fn () => Feature::enabled_for_some->enforce())->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+    expect(fn() => Feature::enabled_for_some->enforce())->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
 });
 
-it('can enforce a feature for a given user', function () {
-    expect(fn () => Feature::enabled_for_some->enforce($this->enabled_user))->not->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+it('can enforce a feature for a given user', function(){
+    expect(fn() => Feature::enabled_for_some->enforce($this->enabled_user))->not->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
 
-    expect(fn () => Feature::enabled_for_some->enforce($this->disabled_user))->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+    expect(fn() => Feature::enabled_for_some->enforce($this->disabled_user))->toThrow(\Symfony\Component\HttpKernel\Exception\HttpException::class);
 });
 
-it('can activate a feature', function () {
-    Auth::setUser($this->disabled_user);
+it('can activate a feature', function(){
+   Auth::setUser($this->disabled_user);
 
-    expect(Feature::enabled_for_some->active())->toBeFalse();
+   expect(Feature::enabled_for_some->active())->toBeFalse();
 
-    Feature::enabled_for_some->activate();
+   Feature::enabled_for_some->activate();
 
     expect(Feature::enabled_for_some->active())->toBeTrue();
 });
 
-it('can activate a feature for a given user', function () {
-    expect(Feature::enabled_for_some->active($this->disabled_user))->toBeFalse();
+it('can activate a feature for a given user', function(){
+   expect(Feature::enabled_for_some->active($this->disabled_user))->toBeFalse();
 
-    Feature::enabled_for_some->activate($this->disabled_user);
+   Feature::enabled_for_some->activate($this->disabled_user);
 
     expect(Feature::enabled_for_some->active($this->disabled_user))->toBeTrue();
 });
 
-it('can deactivate a feature', function () {
-    Auth::setUser($this->enabled_user);
+it('can deactivate a feature', function(){
+   Auth::setUser($this->enabled_user);
 
-    expect(Feature::enabled_for_some->active())->toBeTrue();
+   expect(Feature::enabled_for_some->active())->toBeTrue();
 
-    Feature::enabled_for_some->deactivate();
+   Feature::enabled_for_some->deactivate();
 
     expect(Feature::enabled_for_some->active())->toBeFalse();
 });
 
-it('can deactivate a feature for a given user', function () {
-    expect(Feature::enabled_for_some->active($this->enabled_user))->toBeTrue();
+it('can deactivate a feature for a given user', function(){
+   expect(Feature::enabled_for_some->active($this->enabled_user))->toBeTrue();
 
-    Feature::enabled_for_some->deactivate($this->enabled_user);
+   Feature::enabled_for_some->deactivate($this->enabled_user);
 
     expect(Feature::enabled_for_some->active($this->enabled_user))->toBeFalse();
 });
 
-it('can check if features are all active', function () {
+it('can check if all features are active', function(){
     Auth::setUser($this->enabled_user);
 
-    expect(Feature::areAllActive([
+   expect(Feature::areAllActive([
         Feature::enabled_for_some,
         Feature::enabled_for_all,
-    ]))->toBeTrue();
+   ]))->toBeTrue();
 
     Auth::setUser($this->disabled_user);
 
@@ -183,5 +185,59 @@ it('can check if features are all active', function () {
 });
 
 it('can check if some features are active', function () {
+    Auth::setUser($this->enabled_user);
 
+    expect(Feature::someAreActive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_all,
+    ]))->toBeTrue();
+
+    expect(Feature::someAreActive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_none,
+    ]))->toBeTrue();
+
+    Auth::setUser($this->disabled_user);
+
+    expect(Feature::someAreActive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_none,
+    ]))->toBeFalse();
+});
+
+it('can check if all features are inactive', function () {
+    Auth::setUser($this->enabled_user);
+
+    expect(Feature::areAllInactive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_none,
+    ]))->toBeFalse();
+
+    Auth::setUser($this->disabled_user);
+
+    expect(Feature::areAllInactive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_none,
+    ]))->toBeTrue();
+});
+
+it('can check if some features are inactive', function () {
+    Auth::setUser($this->enabled_user);
+
+    expect(Feature::someAreInactive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_all,
+    ]))->toBeFalse();
+
+    expect(Feature::someAreInactive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_none,
+    ]))->toBeTrue();
+
+    Auth::setUser($this->disabled_user);
+
+    expect(Feature::someAreInactive([
+        Feature::enabled_for_some,
+        Feature::enabled_for_none,
+    ]))->toBeTrue();
 });

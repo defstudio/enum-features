@@ -79,37 +79,9 @@ if(AppFeature::multi_language->active()){
 }
 ```
 
-or be disabled
+An extensive documentation is available at
 
-```php
-if(AppFeature::impersonate->inactive()){
-    throw(new Exception("Impersonate feature is not enabled"));
-}
-```
-
-or enforce it
-
-```php
-
-AppFeature::impersonate->enforce(); //throws "Feature [impersonate] is not enabled"
-
-```
-
-### Blade directives
-
-In blade files, a feature can be checked with `@feature` directive:
-
-```html
-
-@feature(AppFeature::multi_language)
-<select name="language" xmlns="http://www.w3.org/1999/html">
-    <option value="en">English</option>
-    <option value="fr">French</option>
-    <option value="it">Italian</option>
-</select>
-@endfeature
-
-```
+https://docs.defstudio.it/enum-features
 
 ## Testing
 

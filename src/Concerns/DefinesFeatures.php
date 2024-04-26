@@ -42,11 +42,6 @@ trait DefinesFeatures
         return EnsureFeaturesAreActive::using($this->featureName());
     }
 
-    public function purge(): void
-    {
-        Pennant::purge($this->featureName());
-    }
-
     protected function resolve(?Authenticatable $scope = null): bool
     {
         $featureName = $this->featureName();
@@ -55,16 +50,8 @@ trait DefinesFeatures
         $try_methods = [
             "resolve_$featureName",
             "resolve_{$featureName}_feature",
-            "check_$featureName",
-            "check_{$featureName}_feature",
-            "has_$featureName",
-            "has_{$featureName}Feature",
             "resolve$camelFeatureName",
             "resolve{$camelFeatureName}Feature",
-            "check$camelFeatureName",
-            "check{$camelFeatureName}Feature",
-            "has$camelFeatureName",
-            "has{$camelFeatureName}Feature",
         ];
 
         foreach ($try_methods as $method) {
@@ -79,7 +66,7 @@ trait DefinesFeatures
     public function enforce(?Authenticatable $scope = null): void
     {
         if (! $this->active($scope)) {
-            abort(400);
+            abort(403);
         }
     }
 
@@ -114,6 +101,11 @@ trait DefinesFeatures
         }
 
         Pennant::forget($this->featureName());
+    }
+
+    public function purge(): void
+    {
+        Pennant::purge($this->featureName());
     }
 
     public static function defineFeatures(): void
